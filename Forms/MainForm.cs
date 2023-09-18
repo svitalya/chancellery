@@ -16,7 +16,7 @@ namespace chancellery.Forms
         public MainForm()
         {
             InitializeComponent();
-            ApplicationContext bd = Program.bd;
+            MinimumSize = Size;
 
             //Random rnd = new Random();
 
@@ -56,29 +56,37 @@ namespace chancellery.Forms
             checkCart();
         }
 
+        public void chechAuth()
+        {
+            bool isAuth = User.authUser != null;
+
+            logoutButton.Visible = isAuth;
+            logingButton.Visible = !isAuth;
+
+
+            logoutButton.Text = isAuth ? "Выйти" : "Войти";
+
+            loginLable.Text = isAuth ? "Логин: " + User.authUser.Login : "Вы еще не вошли";
+            acessLabel.Visible = isAuth;
+            acessLabel.Text = isAuth ? "Роль: " + User.authUser.UserRole.Name : "";
+
+            makeProductsTable(User.getLevelAccess());
+
+        }
+
         public void initAuth()
         {
-            logoutButton.Visible = false;
-            logingButton.Visible = true;
 
+            chechAuth();
             logingButton.Click += (o, e) =>
             {
                 AuthForm form = new AuthForm();
                 form.FormClosed += (s, e2) =>
                 {
-
-                    if (User.authUser == null) return;
-
-                    logingButton.Visible = false;
-                    logoutButton.Visible = true;
-
-                    logoutButton.Text = "Выйти";
-                    loginLable.Text = "Логин: " + User.authUser.Login;
-                    acessLabel.Visible = true;
-                    acessLabel.Text = "Роль: " + User.authUser.UserRole.Name;
-
-                    ApplicationContext bd = Program.bd;
-                    makeProductsTable(User.getLevelAccess());
+                    if (form.isAuthed)
+                    {
+                        chechAuth();
+                    }
                 };
 
                 form.ShowDialog();
@@ -87,15 +95,7 @@ namespace chancellery.Forms
             logoutButton.Click += (o, e) =>
             {
                 User.Logout();
-                logoutButton.Visible = false;
-                logingButton.Visible = true;
-                logoutButton.Text = "Войти";
-                loginLable.Text = "Вы еще не вошли";
-                acessLabel.Visible = false;
-                acessLabel.Text = "";
-
-                ApplicationContext bd = Program.bd;
-                makeProductsTable(User.getLevelAccess());
+                chechAuth();
             };
 
         }
@@ -186,7 +186,16 @@ namespace chancellery.Forms
         {
             ToolStripMenuProduct toolStripMenuItem = sender as ToolStripMenuProduct;
             Product product = toolStripMenuItem.Product;
-            Program.cart.Add(product);
+
+            bool isOk = Program.cart.Add(product);
+
+            if (!isOk)
+            {
+                MessageBox.Show("Достигнуто максимальное значение продукции на складе",
+                                $"Ошибка. Нельзя добавить продукт \"{product.Name}\"", MessageBoxButtons.OK);
+                return;
+            }
+
             checkCart();
         }
 
@@ -276,6 +285,16 @@ namespace chancellery.Forms
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

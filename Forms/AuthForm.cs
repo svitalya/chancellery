@@ -13,9 +13,13 @@ namespace chancellery.Forms
 {
     public partial class AuthForm : Form
     {
+
+        public bool isAuthed = false;
+
         public AuthForm()
         {
             InitializeComponent();
+            MinimumSize = Size;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -28,22 +32,28 @@ namespace chancellery.Forms
             textBox2.PasswordChar = (sender as CheckBox).Checked ? '\0' : '*';
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void  button1_Click(object sender, EventArgs e)
         {
             bool result = User.Auth(textBox1.Text, textBox2.Text);
             if (!result)
             {
                 MessageBox.Show("Неправильные пароль или логин");
+                return;
             }
 
             MessageBox.Show("Вход выполнен");
+            isAuthed = true;
             Close();
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void AuthForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

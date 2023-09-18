@@ -30,38 +30,52 @@
         {
             this.productsTable = new System.Windows.Forms.Panel();
             this.logingPanel = new System.Windows.Forms.Panel();
+            this.cartShowButton = new System.Windows.Forms.Button();
             this.logoutButton = new System.Windows.Forms.Button();
             this.acessLabel = new System.Windows.Forms.Label();
             this.loginLable = new System.Windows.Forms.Label();
             this.logingButton = new System.Windows.Forms.Button();
-            this.cartShowButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.logingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // productsTable
             // 
             this.productsTable.AutoScroll = true;
+            this.productsTable.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.productsTable.Location = new System.Drawing.Point(12, 12);
             this.productsTable.Name = "productsTable";
-            this.productsTable.Size = new System.Drawing.Size(830, 516);
+            this.productsTable.Size = new System.Drawing.Size(830, 452);
             this.productsTable.TabIndex = 0;
             // 
             // logingPanel
             // 
+            this.logingPanel.Controls.Add(this.cartShowButton);
             this.logingPanel.Controls.Add(this.logoutButton);
             this.logingPanel.Controls.Add(this.acessLabel);
             this.logingPanel.Controls.Add(this.loginLable);
             this.logingPanel.Controls.Add(this.logingButton);
             this.logingPanel.Location = new System.Drawing.Point(855, 12);
             this.logingPanel.Name = "logingPanel";
-            this.logingPanel.Size = new System.Drawing.Size(134, 104);
+            this.logingPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.logingPanel.Size = new System.Drawing.Size(134, 136);
             this.logingPanel.TabIndex = 1;
+            // 
+            // cartShowButton
+            // 
+            this.cartShowButton.Location = new System.Drawing.Point(16, 97);
+            this.cartShowButton.Name = "cartShowButton";
+            this.cartShowButton.Size = new System.Drawing.Size(75, 25);
+            this.cartShowButton.TabIndex = 2;
+            this.cartShowButton.Text = "Корзина";
+            this.cartShowButton.UseVisualStyleBackColor = true;
+            this.cartShowButton.Click += new System.EventHandler(this.cartShowButton_Click);
             // 
             // logoutButton
             // 
             this.logoutButton.Location = new System.Drawing.Point(16, 66);
             this.logoutButton.Name = "logoutButton";
-            this.logoutButton.Size = new System.Drawing.Size(62, 25);
+            this.logoutButton.Size = new System.Drawing.Size(75, 25);
             this.logoutButton.TabIndex = 2;
             this.logoutButton.Text = "Войти";
             this.logoutButton.UseVisualStyleBackColor = true;
@@ -89,32 +103,34 @@
             // 
             this.logingButton.Location = new System.Drawing.Point(16, 66);
             this.logingButton.Name = "logingButton";
-            this.logingButton.Size = new System.Drawing.Size(62, 25);
+            this.logingButton.Size = new System.Drawing.Size(75, 25);
             this.logingButton.TabIndex = 0;
             this.logingButton.Text = "Войти";
             this.logingButton.UseVisualStyleBackColor = true;
             // 
-            // cartShowButton
+            // button1
             // 
-            this.cartShowButton.Location = new System.Drawing.Point(858, 135);
-            this.cartShowButton.Name = "cartShowButton";
-            this.cartShowButton.Size = new System.Drawing.Size(75, 23);
-            this.cartShowButton.TabIndex = 2;
-            this.cartShowButton.Text = "Корзина";
-            this.cartShowButton.UseVisualStyleBackColor = true;
-            this.cartShowButton.Click += new System.EventHandler(this.cartShowButton_Click);
+            this.button1.Location = new System.Drawing.Point(12, 470);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(72, 25);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Закрыть";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1017, 540);
-            this.Controls.Add(this.cartShowButton);
+            this.ClientSize = new System.Drawing.Size(1017, 519);
+            this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.logingPanel);
             this.Controls.Add(this.productsTable);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Канцелярский рай";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.logingPanel.ResumeLayout(false);
             this.logingPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -130,6 +146,7 @@
         private System.Windows.Forms.Button logingButton;
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Button cartShowButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

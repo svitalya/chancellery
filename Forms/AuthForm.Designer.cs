@@ -87,7 +87,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(36, 152);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 5;
             this.button1.Text = "Войти";
             this.button1.UseVisualStyleBackColor = true;
@@ -97,7 +97,7 @@
             // 
             this.button2.Location = new System.Drawing.Point(129, 152);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 6;
             this.button2.Text = "Назад";
             this.button2.UseVisualStyleBackColor = true;
@@ -107,7 +107,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 201);
+            this.ClientSize = new System.Drawing.Size(247, 201);
+            this.ControlBox = false;
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
@@ -115,8 +116,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.MinimizeBox = false;
             this.Name = "AuthForm";
-            this.Text = "AuthForm";
+            this.Text = "Войти";
+            this.Load += new System.EventHandler(this.AuthForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

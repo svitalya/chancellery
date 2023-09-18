@@ -16,10 +16,14 @@ namespace chancellery.Service
         public Product product => _product;
         public int count => _count;
 
+        public double resultPrice => Math.Round(this._count * this._product.priceWithDiscount, 2);
+        public string resultPriceString => String.Format("{0:C2}", resultPrice);
+
 
         public CartPosition(Product product)
         {
             this._product = product;
+            this._count = 0;
         }
 
         public void AddProduct()
@@ -53,21 +57,69 @@ namespace chancellery.Service
             this._cart = new Dictionary<int, CartPosition>();
         }
 
-        public void Add(Product product)
-        {
-            CartPosition cp;
-            if(!_cart.TryGetValue(product.ProductId, out cp))
-            {
-                cp = new CartPosition(product);
-                _cart.Add(product.ProductId, cp);
-            }
 
-            cp.AddProduct();
+        public bool Add(Product product)
+        {
+            if(product.Count <= 0) return false;
+
+            CartPosition cp = getOrCreatePosition(product);
+
+            if(cp.count + 1 <= product.Count)
+            {
+                cp.AddProduct();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+
+        public bool SetCount(Product product, int count)
+        {
+            if (product.Count <= 0) return false;
+
+            CartPosition cp = getOrCreatePosition(product);
+            if (count == 0)
+            {
+                DeletePosition(product.ProductId);
+                return true;
+            }
+            else if (count <= product.Count)
+            {
+                cp.SetCount(count);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public CartPosition getPosition(int productId)
         {
-            return _cart[productId];
+            try
+            {
+                return _cart[productId];
+            }catch(KeyNotFoundException)
+            {
+                return null;
+            }
+            
+        }
+
+        private CartPosition getOrCreatePosition(Product product)
+        {
+            CartPosition cartPosition = getPosition(product.ProductId);
+
+            if(cartPosition == null)
+            {
+                cartPosition = new CartPosition(product);
+                _cart.Add(product.ProductId, cartPosition);
+            }
+
+            return cartPosition;
         }
 
         public override string ToString()
@@ -109,6 +161,11 @@ namespace chancellery.Service
             return _cart.Count > 0; 
         }
 
+        public void clearCart()
+        {
+            _cart.Clear();
+        }
+
         public void DataGridFill(ref DataGridView dataGrid)
         {
             dataGrid.Rows.Clear();     
@@ -117,18 +174,15 @@ namespace chancellery.Service
             {
                 CartPosition positionVal = position.Value;
                 Product product = positionVal.product;
-                double discount = product.Discount ?? 0;
-                double priceWithDiscount = product.Price - product.Price * discount / 100;
 
-                int n = dataGrid.Rows.Add(new string[]{
+                dataGrid.Rows.Add(new string[]{
                     position.Key.ToString(),
                     product.Name,
-                    product.Price.ToString(),
-                    discount > 0 ? product.Discount.ToString() : "Нет",
-                    Math.Round(priceWithDiscount, 2)
-                        .ToString(),
+                    product.priceString,
+                    product.discountStrign,
+                    product.priceWithDiscountString,
                     positionVal.count.ToString(),
-                    Math.Round(priceWithDiscount * positionVal.count, 2).ToString(),
+                    positionVal.resultPriceString,
                 });
             }
         }

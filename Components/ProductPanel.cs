@@ -28,11 +28,9 @@ namespace chancellery.Components
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
             MemoryStream ms = new MemoryStream(product.Image);
-            pictureBox.Image = System.Drawing.Image.FromStream(ms);
+            pictureBox.Image = Image.FromStream(ms);
             ms.Dispose();
-
             Controls.Add(pictureBox);
-
 
             Label label = new Label();
             label.Size = new Size(120, 15);
@@ -42,24 +40,21 @@ namespace chancellery.Components
 
             Label label2 = new Label();
             label2.Size = new Size(120, 15);
-            label2.Text = String.Format("Цена: {0:C2}", product.Price - (product.Discount != null ? (product.Price * product.Discount / 100) : 0));
+            label2.Text = "Цена: " + product.priceWithDiscountString;
             label2.Location = new Point(5, 125);
             Controls.Add(label2);
 
             Label label3 = new Label();
             label3.Size = new Size(120, 15);
-            string text = product.Discount != null && product.Discount != 0 ? String.Format("{0}%", product.Discount) : "Нет";
-            label3.Text = $"Скидка: {text}";
+            label3.Text = $"Скидка: {product.discountStrign}";
             label3.Location = new Point(5, 145);
             Controls.Add(label3);
      
             Label label4 = new Label();
             label4.Size = new Size(120, 15);
-            label4.Text = String.Format("На складе: {0}", product.Count);
+            label4.Text = "На складе: " + product.Count.ToString();
             label4.Location = new Point(5, 165);
             Controls.Add(label4);
-
-
         }
     }
 }

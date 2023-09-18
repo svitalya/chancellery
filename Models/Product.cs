@@ -18,5 +18,14 @@ namespace chancellery.Models
         public double? Discount { get; set; }
 
         public int Count { get; set; }
+
+        public double priceWithDiscount => Price - Price * (Discount ?? 0) / 100;
+
+        public string discountStrign => Discount != null && Discount > 0 ? Discount.ToString()+"%" : "Нет";
+
+        public string priceString => String.Format("{0:C2}", Price);
+        public string priceWithDiscountString => String.Format("{0:C2}", priceWithDiscount);
+
+
     }
 }

@@ -52,13 +52,26 @@ namespace chancellery.Forms
         {
             InitializeComponent();
 
+            MinimumSize = Size;
+
+            if (isAddingProduct)
+            {
+                Text = "Новый товар";
+            }
+            else
+            {
+                Text = isEdit ? $"Редактирование товара - \"{product.Name}\"" : $"Товар: \"{product.Name}\"";
+            }
+
             this.product = product;
             this.isEdit = isEdit;
             this.isAddingProduct = isAddingProduct;
 
             string productNameArchive = !isAddingProduct ? product.Name : "";
             string productDescriptionArchive = !isAddingProduct ? product.Description : "";
-            string productDiscountArchive = !isAddingProduct ? product.Discount.ToString() : "";
+            string productDiscountArchive = !isAddingProduct
+                ? (product.Discount == null || product.Discount == 0 ? "" : product.Discount.ToString())
+                : "";
             string productPriceArchive = !isAddingProduct ? product.Price.ToString() : "";
             string productCountArchive = !isAddingProduct ? product.Count.ToString() : "";
             string productImageArchive = !isAddingProduct ?
@@ -111,7 +124,7 @@ namespace chancellery.Forms
 
         private void checkChange()
         {
-            button2.Enabled = isEdited;
+            button2.Enabled = isEdited && checkInput(false);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -128,25 +141,25 @@ namespace chancellery.Forms
             checkChange();
         }
 
-        public bool checkInput()
+        public bool checkInput(bool showMessage = true)
         {  
 
             if (textBox1.Text.Length == 0 || textBox1.Text.Length > 64)
             {
-                MessageBox.Show("Название продукта не может быть пустым или содержать в себе больше 64 символов");
+                if (showMessage) MessageBox.Show("Название продукта не может быть пустым или содержать в себе больше 64 символов");
                 return false;
             }
 
             if (textBox2.Text.Length == 0 || textBox2.Text.Length > 256)
             {
-                MessageBox.Show("Описание продукта не может быть пустым или содержать в себе больше 256 символов");
+                if (showMessage) MessageBox.Show("Описание продукта не может быть пустым или содержать в себе больше 256 символов");
                 return false;
             }
 
             double priceCheck;
             if (textBox3.Text.Length == 0 || !double.TryParse(textBox3.Text, out priceCheck) || priceCheck <= 0)
             {
-                MessageBox.Show("Цена продукта не может быть нулевой или отрицательной");
+                if (showMessage) MessageBox.Show("Цена продукта не может быть нулевой или отрицательной");
                 return false;
             }
 
@@ -157,7 +170,7 @@ namespace chancellery.Forms
                 && (!double.TryParse(textBox4.Text, out discountCheck) || discountCheck < 0 || discountCheck > 100)
             )
             {
-                MessageBox.Show("Скидка на продукт не может быть отрицательной или больше 100%");
+                if (showMessage) MessageBox.Show("Скидка на продукт не может быть отрицательной или больше 100%");
                 return false;
             }
 
@@ -166,14 +179,14 @@ namespace chancellery.Forms
 
             if (textBox5.Text.Length == 0 || !int.TryParse(textBox5.Text, out countCheck) || countCheck < 0)
             {
-                MessageBox.Show("Введите количество");
+                if (showMessage) MessageBox.Show("Введите количество");
                 return false;
             }
 
 
             if(pictureBox1.Image == null)
             {
-                MessageBox.Show("Загрузите изображение");
+                if (showMessage) MessageBox.Show("Загрузите изображение");
                 return false;
             }
 
