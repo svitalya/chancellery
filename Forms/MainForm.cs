@@ -50,8 +50,6 @@ namespace chancellery.Forms
             //{
             //    Program.cart.Add(product);
             //}
-
-            makeForm();
             initAuth();
             checkCart();
         }
@@ -289,12 +287,15 @@ namespace chancellery.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void dataGridView1_KeyPress(object sender, KeyPressEventArgs e)
+        {
         }
     }
 }

@@ -66,8 +66,6 @@ namespace chancellery.Forms
 
             MemoryStream ms = new MemoryStream(product.Image);
             pictureBox1.Image = Image.FromStream(ms);
-
-
             ms.Dispose();
         }
 
