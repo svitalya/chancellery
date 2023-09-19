@@ -43,7 +43,7 @@ namespace chancellery.Forms
 
             //bd.SaveChanges();
 
-            User.Auth("admin", "qwerty");
+            //User.Auth("admin", "qwerty");
             //List<Product> prods = bd.Products.Where(p => p.Count > 0).ToList();
 
             //foreach (Product product in prods)
@@ -70,7 +70,7 @@ namespace chancellery.Forms
             acessLabel.Visible = isAuth;
             acessLabel.Text = isAuth ? "Роль: " + User.authUser.UserRole.Name : "";
 
-            makeProductsTable(User.getLevelAccess());
+            makeForm();
 
         }
 
